@@ -4,5 +4,4 @@ spring:
     config.import: configserver:http://localhost:8888
     application.name: eclient
 
-logging.pattern.console: '%C{1.} [%-5level] %d{HH:mm:ss} - %msg%n'
 eureka.instance.instance-id: '${spring.application.name}:${random.uuid}'

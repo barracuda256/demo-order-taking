@@ -12,5 +12,3 @@ eureka.client:
 logging.level.com.netflix:
     eureka: OFF
     discovery: OFF
-
-logging.pattern.console: '%C{1.} [%-5level] %d{HH:mm:ss} - %msg%n'
