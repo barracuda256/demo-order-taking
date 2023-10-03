@@ -4,8 +4,15 @@ spring:
     config.import: configserver:http://localhost:8888
     application.name: api-gateway
 
-    cloud.gateway.discovery.locator:
-        enabled: true
-        lower-case-service-id: true
+    cloud.gateway:
+        discovery.locator:
+            enabled: true
+            lower-case-service-id: true
+        routes:
+            - id: test
+              uri: lb://eclient
+              predicates:
+                  - Path=/main/test
+                  - Method=GET
 
 logging.pattern.console: '%C{1.} [%-5level] %d{HH:mm:ss} - %msg%n'
