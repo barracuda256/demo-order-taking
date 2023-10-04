@@ -1,7 +1,8 @@
 server.port: 8888
 
 spring:
-    application.name: github-config-server
+    application:
+        name: CONFIGSERVER
 
     cloud.config.server.git:
         uri: https://github.com/barracuda256/demo-order-taking-config.git
@@ -11,5 +12,12 @@ spring:
         #For private repo
         # username: TODO
         # password: TODO
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
+    instance:
+        instance-id: '${spring.application.name}:${random.uuid}'
 
 logging.pattern.console: '%C{1.} [%-5level] %d{HH:mm:ss} - %msg%n'

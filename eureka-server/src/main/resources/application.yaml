@@ -1,14 +1,15 @@
 server.port: 8761
 
 spring:
-    config.import: configserver:http://localhost:8888
     application.name: eureka-server
-#    application.name: eserver
+
+logging:
+    pattern.console: '%C{1.} [%-5level] %d{HH:mm:ss} - %msg%n'
+    level.com.netflix:
+        eureka: OFF
+        discovery: OFF
 
 eureka.client:
     register-with-eureka: false
     fetch-registry: false
 
-logging.level.com.netflix:
-    eureka: OFF
-    discovery: OFF

@@ -11,5 +11,6 @@ RUN gradle build
 #
 FROM openjdk:17
 WORKDIR /app
+#COPY --from=builder /home/gradle/src/application.yaml /app/application.yaml
 COPY --from=builder /home/gradle/src/build/libs/*.jar /app/app.jar
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar app.jar" ]
