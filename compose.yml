@@ -26,6 +26,11 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
       resources:
         limits:
           memory: 250M
@@ -51,6 +56,11 @@ services:
     volumes:
       - ./keycloak/demo-realm.json:/opt/keycloak/data/import/realm.json:ro
     deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
       resources:
         limits:
           memory: 500M
@@ -64,16 +74,27 @@ services:
       context: ./docker
       dockerfile: zookeeper.Dockerfile
     container_name: zookeeper
-    restart: "no"
+    restart: on-failure
     ports:
       - ${ZOOKEEPER_PORT}:2181
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
+      resources:
+        limits:
+          memory: 250M
+          cpus: '1'
+    logging: *logging
 
   kafka:
     build:
       context: ./docker
       dockerfile: kafka.Dockerfile
     container_name: kafka
-    restart: "no"
+    restart: on-failure
     ports:
       - ${KAFKA_PORT}:9092
     environment:
@@ -84,6 +105,13 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_PORT}
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
+    logging: *logging
     depends_on:
       - zookeeper
 
@@ -92,11 +120,22 @@ services:
       context: ./docker
       dockerfile: kafdrop.Dockerfile
     container_name: kafdrop
-    restart: "no"
+    restart: on-failure
     ports:
       - ${KAF_DROP_PORT}:9000
     environment:
       KAFKA_BROKERCONNECT: "kafka:29092"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
+      resources:
+        limits:
+          memory: 250M
+          cpus: '1'
+    logging: *logging
     depends_on:
       - kafka
 
@@ -105,10 +144,15 @@ services:
       context: ./eureka-server
       dockerfile: eureka-server.Dockerfile
     container_name: discovery
-    restart: "no"
+    restart: on-failure
     ports:
       - ${EUREKA_SERVER_PORT}:8761
     deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
       resources:
         limits:
           memory: 250M
@@ -120,7 +164,8 @@ services:
       context: ./github-config-server
       dockerfile: config-server.Dockerfile
     container_name: config_server
-    restart: unless-stopped
+    restart: on-failure
+    hostname: config-server
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER_URL=${EUREKA_SERVER_URL}
@@ -128,6 +173,11 @@ services:
     ports:
       - ${CONFIG_SERVER_PORT}:8888
     deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
       resources:
         limits:
           memory: 250M
@@ -141,15 +191,20 @@ services:
       context: ./eureka-client
       dockerfile: eureka-client.Dockerfile
     container_name: eureka_client
-    restart: "no"
+    restart: on-failure
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER_URL=${EUREKA_SERVER_URL}
         -DCONFIG_SERVER_URL=${CONFIG_SERVER_URL}
-        -DEUREKA_CLIENT_PORT=${EUREKA_CLIENT_PORT}
+        -Dserver.port=${EUREKA_CLIENT_PORT}
     ports:
       - ${EUREKA_CLIENT_PORT}:${EUREKA_CLIENT_PORT}
     deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
       resources:
         limits:
           memory: 200M
@@ -163,10 +218,11 @@ services:
       context: ./api-gateway
       dockerfile: api-gateway-server.Dockerfile
     container_name: api_gateway
-    restart: "no"
+    restart: on-failure
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER_URL=${EUREKA_SERVER_URL}
+        -DCONFIG_SERVER_URL=${CONFIG_SERVER_URL}
     ports:
       - ${API_GATEWAY_SERVER_PORT}:8765
     deploy:
@@ -177,4 +233,3 @@ services:
     logging: *logging
     depends_on:
       - eureka_client
-

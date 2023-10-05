@@ -1,13 +1,12 @@
-server.port: ${EUREKA_CLIENT_PORT:0}
+server.port: 0
 
 spring:
     application:
         name: eclient
     profiles:
-        active: micro
-#    config.import: ${CONFIG_SERVER_URL:configserver:http://config-server:8888}
-#    config.import: 'configserver:'
-
+        active: ${PROFILE:micro}
+    config:
+        import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
     cloud:
         config:
             fail-fast: true
