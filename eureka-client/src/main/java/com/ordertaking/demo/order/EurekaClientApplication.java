@@ -1,4 +1,4 @@
-package com.ordertaking.demo.eurekaclient;
+package com.ordertaking.demo.order;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -346,6 +346,42 @@ services:
         condition: service_healthy
         restart: true
 
+  order_processing:
+    build:
+      context: ./order-processing
+      dockerfile: order-processing.Dockerfile
+    container_name: order_processing
+    restart: on-failure
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER_URL=${EUREKA_SERVER_URL}
+        -DCONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+        -Dserver.port=${ORDER_PROCESSING_PORT}
+    ports:
+      - ${ORDER_PROCESSING_PORT}:${ORDER_PROCESSING_PORT}
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
+      resources:
+        limits:
+          memory: 200M
+          cpus: '1'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/main/test"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+      start_interval: 5s
+    logging: *logging
+    depends_on:
+      config_server:
+        condition: service_healthy
+        restart: true
+
   api_gateway:
     build:
       context: ./api-gateway
@@ -376,5 +412,11 @@ services:
         condition: service_healthy
         restart: true
       eureka_client_2:
+        condition: service_healthy
+        restart: true
+      order_taking:
+        condition: service_healthy
+        restart: true
+      order_processing:
         condition: service_healthy
         restart: true
