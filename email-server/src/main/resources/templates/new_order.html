@@ -1,0 +1,62 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body style="background:#f0f0f0">
+<div style="background:#f0f0f0;padding-top:5px;padding-bottom:5px;">
+  <table
+    style="background:#fff;border:1px solid #c8c8c8;border-radius:10px 10px 10px 10px;width:660px;max-width:660px;margin:20px auto 10px auto;padding:0px;border-spacing:0px;">
+    <tr>
+      <td
+        style="background-color:#fff;text-align:center;vertical-align:middle;font-family:Verdana,Helvetica, sans-serif;font-weight:normal;border-radius:10px 10px 10px 10px;">
+      </td>
+    </tr>
+    <tr>
+      <td style="height:10px;min-height:10px;max-height:10px;background:#fff;"></td>
+    </tr>
+    <tr>
+      <td
+        style="background-color:#fff;text-align:center;vertical-align:middle;font-family:Verdana,Helvetica, sans-serif;font-weight:normal;">
+        <table style="width:100%">
+          <tr>
+            <td
+              style="padding-left:20px;padding-right:20px;padding-top:20px;font-family:Verdana, sans-serif;font-size:20px;font-weight:bold;text-align:center">
+              Your order
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:40px;">
+              <div
+                style="color:#000000; background:#f0f0f0;width:calc(100% - 20px);padding:20px;text-align:justify;font-family:Tahoma;font-size:16px;border-radius:5px;">
+                <p>Dear [[${order.customer.firstName}]] [[${order.customer.lastName}]], </p>
+                <p>The new order # <span style="font-weight: bold; color: #0693e3;" th:text="${order.requestId}"/> to buy the following services:</p>
+                <p>
+                <ul th:each="product: ${order.productList}">
+                    <span style="font-weight: bold; color: #0693e3;" th:each="package: ${product.packages}">
+                        <li><span th:text="${product.productName}"/> - <span th:text="${package.packageName}"/></li>
+                    </span>
+                </ul>
+                </p>
+                <p>With kind regards,</p>
+                <span style="font-weight:bold;">Demo</span><br/>
+                T: +00 000 000 0000<br/>E: support@com<br/>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="height:10px;min-height:10px;max-height:10px;background:#fff;"></td>
+    </tr>
+    <tr>
+      <td
+        style="background-color:#fff;text-align:center;vertical-align:middle;font-family:Verdana,Helvetica, sans-serif;font-weight:normal;border-radius:10px 10px 10px 10px;">
+        <div style="padding-bottom:5px">
+          <div style="font-family:Tahoma;font-size:16px; text-align:center; margin: 5px 20px 20px 20px;padding: 0;">
+            <a href="https://home.io">Home</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
