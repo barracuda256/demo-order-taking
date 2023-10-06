@@ -128,6 +128,7 @@ services:
       context: ./docker
       dockerfile: kafka.Dockerfile
     container_name: kafka
+    hostname: kafka
     restart: on-failure
     ports:
       - ${KAFKA_PORT}:9092
@@ -320,6 +321,7 @@ services:
       - JAVA_OPTS=
         -DEUREKA_SERVER_URL=${EUREKA_SERVER_URL}
         -DCONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+        -DKAFKA_URL=${KAFKA_URL}
         -Dserver.port=${ORDER_TAKING_PORT}
     ports:
       - ${ORDER_TAKING_PORT}:${ORDER_TAKING_PORT}
@@ -356,6 +358,7 @@ services:
       - JAVA_OPTS=
         -DEUREKA_SERVER_URL=${EUREKA_SERVER_URL}
         -DCONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+        -DKAFKA_URL=${KAFKA_URL}
         -Dserver.port=${ORDER_PROCESSING_PORT}
     ports:
       - ${ORDER_PROCESSING_PORT}:${ORDER_PROCESSING_PORT}
