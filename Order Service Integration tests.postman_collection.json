@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "a6afb7ed-91e8-4637-9fb7-2c30d356efec",
+		"name": "Order Service Integration tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6421551"
+	},
+	"item": [
+		{
+			"name": "Order INTERNET 250Mbps",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"requestId\" : \"{{$guid}}\",\r\n  \"customer\" : {\r\n    \"firstName\" : \"Artur\",\r\n    \"lastName\" : \"Buzov\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"16 St John the Baptist street, Sliema\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 10, 9, 9, 0 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"INTERNET\",\r\n    \"packageName\" : \"250Mbps\"\r\n  } ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8765/orders/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
+					"path": [
+						"orders",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order INTERNET and TV",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customer\" : {\r\n    \"firstName\" : \"John\",\r\n    \"lastName\" : \"Doe\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"aaa\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 7, 7, 8, 15 ], [ 2023, 7, 7, 9, 15 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"Internet\",\r\n    \"packageName\" : \"250Mbps\"\r\n  }, {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"TV with 90 channels\"\r\n  } ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order INTERNET, TV, MOBILE, Telephony",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customer\" : {\r\n    \"firstName\" : \"John\",\r\n    \"lastName\" : \"Doe\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"aaa\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 7, 7, 8, 15 ], [ 2023, 7, 7, 9, 15 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"Internet\",\r\n    \"packageName\" : \"250Mbps\"\r\n  }, {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"TV with 90 channels\"\r\n  }, {\r\n    \"productName\" : \"Mobile\",\r\n    \"packageName\" : \"Prepaid\"\r\n  }, {\r\n    \"productName\" : \"Telephony\",\r\n    \"packageName\" : \"Free On net Calls\"\r\n  } ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order product with wrong product",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customer\" : {\r\n    \"firstName\" : \"John\",\r\n    \"lastName\" : \"Doe\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"aaa\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 7, 7, 8, 15 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"250Mbps\"\r\n  } ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order product with wrong package",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customer\" : {\r\n    \"firstName\" : \"John\",\r\n    \"lastName\" : \"Doe\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"aaa\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 7, 7, 8, 15 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"250Mbps\"\r\n  } ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
