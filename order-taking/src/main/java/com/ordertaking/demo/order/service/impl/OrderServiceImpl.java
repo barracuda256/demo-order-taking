@@ -13,11 +13,12 @@ import org.springframework.stereotype.Service;
 public class OrderServiceImpl implements OrderService {
 
     private final static String TOPIC_NAME = "order";
-    private KafkaTemplate<String, Long> kafkaTemplate;
+    private KafkaTemplate<String, Order> kafkaTemplate;
 
     @Override
     public void takeOrder(Order order) {
-        kafkaTemplate.send(TOPIC_NAME, 10L);
+        // TODO need to save into DB
+        kafkaTemplate.send(TOPIC_NAME, order);
     }
 
 }
