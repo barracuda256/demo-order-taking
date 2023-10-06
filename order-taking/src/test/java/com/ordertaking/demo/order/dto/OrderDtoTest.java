@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class OrderDtoTest extends AbstractDtoTest {
 
     private final AddressDto addressDto = new AddressDto(ADDRESS);
-    private final CustomerDto customerDto = new CustomerDto(FIRST_NAME, LAST_NAME);
+    private final CustomerDto customerDto = new CustomerDto(FIRST_NAME, LAST_NAME, EMAIL);
     private final List<LocalDateTime> timeSlots = List.of(TIMESLOT_1, TIMESLOT_2);
     private final InstallationDateTimeDto installationDateTimeDto = new InstallationDateTimeDto(timeSlots);
     private final ProductDto productDto = new ProductDto(PRODUCT_NAME.toString(), PACKAGE_NAME.toString());

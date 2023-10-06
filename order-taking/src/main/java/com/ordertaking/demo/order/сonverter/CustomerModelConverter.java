@@ -9,6 +9,10 @@ public class CustomerModelConverter implements ModelConverter<CustomerDto, Custo
 
     @Override
     public Customer converter(CustomerDto customerDto) {
-        return new Customer(customerDto.firstName(), customerDto.lastName());
+        return new Customer(
+            customerDto.firstName(),
+            customerDto.lastName(),
+            customerDto.email()
+        );
     }
 }

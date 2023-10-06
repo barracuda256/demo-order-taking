@@ -17,6 +17,7 @@ public interface OrderServiceTestConstants {
     String ADDRESS = "20 St John the Baptist street, Sliema";
     String FIRST_NAME = "Artur";
     String LAST_NAME = "Buzov";
+    String EMAIL = "demo@gmail.com";
     ProductName PRODUCT_NAME = ProductName.INTERNET;
     ProductPackage PACKAGE_NAME = GBPS_1;
     String BLANK_STRING = "";

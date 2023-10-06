@@ -1,4 +1,4 @@
-package com.ordertaking.demo.order.rest.assembler;
+package com.ordertaking.demo.order.rest.converter;
 
 
 import com.ordertaking.demo.order.dto.ProductDto;

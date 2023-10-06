@@ -1,4 +1,4 @@
-package com.ordertaking.demo.order.rest.assembler;
+package com.ordertaking.demo.order.rest.converter;
 
 import com.ordertaking.demo.order.dto.*;
 import com.ordertaking.demo.order.model.*;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class OrderModelConverterTest {
 
     private final AddressDto addressDto = new AddressDto(ADDRESS);
-    private final CustomerDto customerDto = new CustomerDto(FIRST_NAME, LAST_NAME);
+    private final CustomerDto customerDto = new CustomerDto(FIRST_NAME, LAST_NAME, EMAIL);
     private final List<LocalDateTime> timeSlots = List.of(TIMESLOT_1, TIMESLOT_2);
     private final InstallationDateTimeDto installationDateTimeDto = new InstallationDateTimeDto(timeSlots);
     private final ProductDto productDto = new ProductDto(PRODUCT_NAME.toString(), PACKAGE_NAME.toString());

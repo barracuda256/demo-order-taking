@@ -2,5 +2,7 @@ package com.ordertaking.demo.order.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record CustomerDto(@NotBlank String firstName, @NotBlank String lastName) {
+public record CustomerDto(@NotBlank String firstName,
+                          @NotBlank String lastName,
+                          @NotBlank String email) {
 }
