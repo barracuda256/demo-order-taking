@@ -22,44 +22,51 @@ class OrderDtoTest extends AbstractDtoTest {
 
     @Test
     public void validatorPassesIfOrderDtoIsValid() {
-        OrderDto orderDto = new OrderDto(customerDto, addressDto, installationDateTimeDto, List.of(productDto));
+        OrderDto orderDto = new OrderDto(REQUEST_ID, customerDto, addressDto, installationDateTimeDto, List.of(productDto));
         Set<ConstraintViolation<OrderDto>> violations = validator.validate(orderDto);
         assertTrue(violations.isEmpty());
     }
 
     @Test
     public void validatorFailsIfCustomerDtoIsNull() {
-        OrderDto orderDto = new OrderDto(null, addressDto, installationDateTimeDto, List.of(productDto));
+        OrderDto orderDto = new OrderDto(REQUEST_ID, null, addressDto, installationDateTimeDto, List.of(productDto));
         Set<ConstraintViolation<OrderDto>> violations = validator.validate(orderDto);
         assertFalse(violations.isEmpty());
     }
 
     @Test
     public void validatorFailsIfAddressDtoIsNull() {
-        OrderDto orderDto = new OrderDto(customerDto, null, installationDateTimeDto, List.of(productDto));
+        OrderDto orderDto = new OrderDto(REQUEST_ID, customerDto, null, installationDateTimeDto, List.of(productDto));
         Set<ConstraintViolation<OrderDto>> violations = validator.validate(orderDto);
         assertFalse(violations.isEmpty());
     }
 
     @Test
     public void validatorFailsIfInstallationDateTimeDtoIsNull() {
-        OrderDto orderDto = new OrderDto(customerDto, addressDto, null, List.of(productDto));
+        OrderDto orderDto = new OrderDto(REQUEST_ID, customerDto, addressDto, null, List.of(productDto));
         Set<ConstraintViolation<OrderDto>> violations = validator.validate(orderDto);
         assertFalse(violations.isEmpty());
     }
 
     @Test
     public void validatorFailsIfProductDtoIsNull() {
-        OrderDto orderDto = new OrderDto(customerDto, addressDto, installationDateTimeDto, null);
+        OrderDto orderDto = new OrderDto(REQUEST_ID, customerDto, addressDto, installationDateTimeDto, null);
         Set<ConstraintViolation<OrderDto>> violations = validator.validate(orderDto);
         assertFalse(violations.isEmpty());
     }
 
     @Test
     public void validatorFailsIfProductListIsEmpty() {
-        OrderDto orderDto = new OrderDto(customerDto, addressDto, installationDateTimeDto, EMPTY_LIST);
+        OrderDto orderDto = new OrderDto(REQUEST_ID, customerDto, addressDto, installationDateTimeDto, EMPTY_LIST);
         Set<ConstraintViolation<OrderDto>> violations = validator.validate(orderDto);
         assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void validatorPassesIfRequestIdIsValid() {
+        OrderDto orderDto = new OrderDto(REQUEST_ID, customerDto, addressDto, installationDateTimeDto, List.of(productDto));
+        Set<ConstraintViolation<OrderDto>> violations = validator.validate(orderDto);
+        assertTrue(violations.isEmpty());
     }
 
 }

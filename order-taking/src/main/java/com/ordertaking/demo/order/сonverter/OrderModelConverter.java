@@ -28,6 +28,6 @@ public class OrderModelConverter implements ModelConverter<OrderDto, Order> {
         InstallationDateTime installationDateTime = installationDateTimeModelAssembler.converter(orderDto.installationDateTime());
         List<Product> products = orderDto.productList().stream().map(productModelAssembler::converter).toList();
 
-        return new Order(customer, address, installationDateTime, products);
+        return new Order(orderDto.requestId(), customer, address, installationDateTime, products);
     }
 }

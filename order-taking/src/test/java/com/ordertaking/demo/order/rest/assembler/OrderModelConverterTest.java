@@ -36,13 +36,13 @@ class OrderModelConverterTest {
 
     @Test
     void orderDtoAssembledToOrder() {
-        OrderDto orderDto = new OrderDto(customerDto, addressDto, installationDateTimeDto, List.of(productDto));
+        OrderDto orderDto = new OrderDto(REQUEST_ID, customerDto, addressDto, installationDateTimeDto, List.of(productDto));
         Address address = addressModelConverter.converter(addressDto);
         Customer customer = customerModelConverter.converter(customerDto);
         InstallationDateTime installationDateTime = installationDateTimeModelConverter.converter(installationDateTimeDto);
         Product product = productModelConverter.converter(productDto);
 
         Order actualorder = orderModelConverter.converter(orderDto);
-        assertEquals(new Order(customer, address, installationDateTime, List.of(product)), actualorder);
+        assertEquals(new Order(orderDto.requestId(), customer, address, installationDateTime, List.of(product)), actualorder);
     }
 }

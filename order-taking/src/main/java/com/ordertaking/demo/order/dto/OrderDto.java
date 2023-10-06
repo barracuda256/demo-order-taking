@@ -6,7 +6,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record OrderDto(@Valid @NotNull CustomerDto customer, @Valid @NotNull AddressDto address,
+public record OrderDto(@Valid @NotNull String requestId,
+                       @Valid @NotNull CustomerDto customer,
+                       @Valid @NotNull AddressDto address,
                        @Valid @NotNull InstallationDateTimeDto installationDateTime,
                        @Valid @NotEmpty @NotNull List<ProductDto> productList) {
 

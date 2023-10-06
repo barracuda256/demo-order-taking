@@ -12,6 +12,7 @@ import static com.ordertaking.demo.order.model.packages.InternetPackage.GBPS_1;
 
 
 public interface OrderServiceTestConstants {
+    String REQUEST_ID = "REQUEST_ID";
     String ADDRESS_1 = "16 St John the Baptist street, Sliema";
     String ADDRESS = "20 St John the Baptist street, Sliema";
     String FIRST_NAME = "Artur";
