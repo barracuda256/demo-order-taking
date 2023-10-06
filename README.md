@@ -2,7 +2,8 @@
 
 1. Requires [docker](https://docs.docker.com/get-docker/) and [compose](https://docs.docker.com/compose/install/)
 2. Parameterized using variables in the [`.env`](.env) file
-3. Up the project using command:
+3. [Settings](https://github.com/barracuda256/demo-order-taking-config) of project
+4. Up the project using command:
 ```
 docker compose up -d
 ```
@@ -28,5 +29,5 @@ docker compose up -d
 
 ## What hasn't been done
 - Saving orders to the database and changing their status after processing
-- Sending letters, you need to create another application
+- Sending letters, need to create another application
 - Keylock is not connected to Spring security applications
