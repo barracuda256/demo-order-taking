@@ -43,10 +43,10 @@ public class ProductModelConverter implements ModelConverter<ProductDto, Product
 
     private ProductPackage getProductPackage(ProductName productName, String packageName) {
         Optional<? extends ProductPackage> productPackage = switch (productName) {
-            case Internet -> InternetPackage.getById(packageName);
+            case INTERNET -> InternetPackage.getById(packageName);
             case TV -> TvPackage.getById(packageName);
-            case Telephony -> TelephonyPackage.getById(packageName);
-            case Mobile -> MobilePackage.getById(packageName);
+            case TELEPHONY -> TelephonyPackage.getById(packageName);
+            case MOBILE -> MobilePackage.getById(packageName);
         };
 
         return productPackage.orElseThrow(() -> new ValidationException(format(PACKAGE_NAME_IS_NOT_VALID, packageName, productName)));

@@ -1,8 +1,8 @@
 package com.ordertaking.demo.order.model;
 
 public enum ProductName {
-    Internet,
+    INTERNET,
     TV,
-    Telephony,
-    Mobile
+    TELEPHONY,
+    MOBILE
 }
