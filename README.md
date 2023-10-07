@@ -29,5 +29,4 @@ docker compose up -d
 
 ## What hasn't been done
 - Saving orders to the database and changing their status after processing
-- Sending letters, need to create another application
 - Keylock is not connected to Spring security applications
