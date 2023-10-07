@@ -17,8 +17,8 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-    @Value("${email.sender}")
-    private String sender;
+//    @Value("${email.sender}")
+    private String sender = "demo.order256@gmail.com";
 
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
