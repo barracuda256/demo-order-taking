@@ -320,6 +320,39 @@ services:
         condition: service_healthy
         restart: true
 
+  email_server:
+    build:
+      context: ./email-server
+      dockerfile: email-server.Dockerfile
+    container_name: email_server
+    restart: on-failure
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER_URL=${EUREKA_SERVER_URL}
+        -DCONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+        -DKAFKA_URL=${KAFKA_URL}
+        -Dserver.port=${EMAIL_SERVER_PORT}
+        -DPOSTGRES_APP_USER=${POSTGRES_APP_USER}
+        -DPOSTGRES_APP_PASSWORD=${POSTGRES_APP_PASSWORD}
+        -DPOSTGRES_APP_URL=${POSTGRES_APP_URL}
+    ports:
+      - ${EMAIL_SERVER_PORT}:${EMAIL_SERVER_PORT}
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 60s
+      resources:
+        limits:
+          memory: 200M
+          cpus: '1'
+    logging: *logging
+    depends_on:
+      config_server:
+        condition: service_healthy
+        restart: true
+
   api_gateway:
     build:
       context: ./api-gateway
