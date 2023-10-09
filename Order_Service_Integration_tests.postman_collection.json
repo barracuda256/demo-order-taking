@@ -7,10 +7,78 @@
 	},
 	"item": [
 		{
+			"name": "1. Get access token cc",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"access_token\", jsonData.access_token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "backend-service",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "backend-need-to-change-secret",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "profile",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/realms/demo-realm/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realms",
+						"demo-realm",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Order INTERNET 250Mbps",
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
 				},
 				"method": "POST",
 				"header": [
@@ -22,7 +90,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"requestId\" : \"{{$guid}}\",\r\n  \"customer\" : {\r\n    \"firstName\" : \"Artur\",\r\n    \"lastName\" : \"Buzov\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"16 St John the Baptist street, Sliema\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 10, 9, 9, 0 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"INTERNET\",\r\n    \"packageName\" : \"250Mbps\"\r\n  } ]\r\n}"
+					"raw": "{\r\n  \"requestId\" : \"{{$guid}}\",\r\n  \"customer\" : {\r\n    \"firstName\" : \"Artur\",\r\n    \"lastName\" : \"Buzov\",\r\n    \"email\" : \"demo@gmail.com\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"16 St John the Baptist street, Sliema\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 10, 9, 9, 0 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"INTERNET\",\r\n    \"packageName\" : \"250Mbps\"\r\n  } ]\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8765/orders/order",
@@ -40,19 +108,14 @@
 			"response": []
 		},
 		{
-			"name": "Order INTERNET and TV",
+			"name": "Order INTERNET 250Mbps 8083 Direct call",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "oauth2",
+					"oauth2": [
 						{
-							"key": "password",
-							"value": "password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "user",
+							"key": "addTokenTo",
+							"value": "header",
 							"type": "string"
 						}
 					]
@@ -67,15 +130,55 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"customer\" : {\r\n    \"firstName\" : \"John\",\r\n    \"lastName\" : \"Doe\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"aaa\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 7, 7, 8, 15 ], [ 2023, 7, 7, 9, 15 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"Internet\",\r\n    \"packageName\" : \"250Mbps\"\r\n  }, {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"TV with 90 channels\"\r\n  } ]\r\n}"
+					"raw": "{\r\n  \"requestId\" : \"{{$guid}}\",\r\n  \"customer\" : {\r\n    \"firstName\" : \"Artur\",\r\n    \"lastName\" : \"Buzov\",\r\n    \"email\" : \"demo@gmail.com\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"16 St John the Baptist street, Sliema\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 10, 9, 9, 0 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"INTERNET\",\r\n    \"packageName\" : \"250Mbps\"\r\n  } ]\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/orders/order",
+					"raw": "http://localhost:8083/orders/order",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8083",
+					"path": [
+						"orders",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order INTERNET and TV",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"requestId\" : \"{{$guid}}\",\r\n  \"customer\" : {\r\n    \"firstName\" : \"Artur\",\r\n    \"lastName\" : \"Buzov\",\r\n    \"email\" : \"demo@gmail.com\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"16 St John the Baptist street, Sliema\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 10, 9, 9, 0 ], [ 2023, 10, 15, 9, 0 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"INTERNET\",\r\n    \"packageName\" : \"250Mbps\"\r\n  }, {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"TV with 90 channels\"\r\n  } ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8765/orders/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
 					"path": [
 						"orders",
 						"order"
@@ -88,16 +191,11 @@
 			"name": "Order INTERNET, TV, MOBILE, Telephony",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "oauth2",
+					"oauth2": [
 						{
-							"key": "password",
-							"value": "password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "user",
+							"key": "addTokenTo",
+							"value": "header",
 							"type": "string"
 						}
 					]
@@ -112,15 +210,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"customer\" : {\r\n    \"firstName\" : \"John\",\r\n    \"lastName\" : \"Doe\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"aaa\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 7, 7, 8, 15 ], [ 2023, 7, 7, 9, 15 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"Internet\",\r\n    \"packageName\" : \"250Mbps\"\r\n  }, {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"TV with 90 channels\"\r\n  }, {\r\n    \"productName\" : \"Mobile\",\r\n    \"packageName\" : \"Prepaid\"\r\n  }, {\r\n    \"productName\" : \"Telephony\",\r\n    \"packageName\" : \"Free On net Calls\"\r\n  } ]\r\n}\r\n"
+					"raw": "{\r\n  \"requestId\" : \"{{$guid}}\",\r\n  \"customer\" : {\r\n    \"firstName\" : \"Artur\",\r\n    \"lastName\" : \"Buzov\",\r\n    \"email\" : \"demo@gmail.com\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"16 St John the Baptist street, Sliema\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 10, 9, 9, 0 ], [ 2023, 10, 15, 9, 0 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"INTERNET\",\r\n    \"packageName\" : \"250Mbps\"\r\n  }, {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"TV with 90 channels\"\r\n  }, {\r\n    \"productName\" : \"MOBILE\",\r\n    \"packageName\" : \"Prepaid\"\r\n  }, {\r\n    \"productName\" : \"TELEPHONY\",\r\n    \"packageName\" : \"Free On net Calls\"\r\n  } ]\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://localhost:8080/orders/order",
+					"raw": "http://localhost:8765/orders/order",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8765",
 					"path": [
 						"orders",
 						"order"
@@ -133,16 +231,11 @@
 			"name": "Order product with wrong product",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "oauth2",
+					"oauth2": [
 						{
-							"key": "password",
-							"value": "password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "user",
+							"key": "addTokenTo",
+							"value": "header",
 							"type": "string"
 						}
 					]
@@ -157,15 +250,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"customer\" : {\r\n    \"firstName\" : \"John\",\r\n    \"lastName\" : \"Doe\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"aaa\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 7, 7, 8, 15 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"TV\",\r\n    \"packageName\" : \"250Mbps\"\r\n  } ]\r\n}"
+					"raw": "{\r\n  \"requestId\" : \"{{$guid}}\",\r\n  \"customer\" : {\r\n    \"firstName\" : \"Artur\",\r\n    \"lastName\" : \"Buzov\",\r\n    \"email\" : \"demo@gmail.com\"\r\n  },\r\n  \"address\" : {\r\n    \"address\" : \"16 St John the Baptist street, Sliema\"\r\n  },\r\n  \"installationDateTime\" : {\r\n    \"availableTimeSlots\" : [ [ 2023, 10, 9, 9, 0 ] ]\r\n  },\r\n  \"productList\" : [ {\r\n    \"productName\" : \"INTERNE\",\r\n    \"packageName\" : \"250Mbps\"\r\n  } ]\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/orders/order",
+					"raw": "http://localhost:8765/orders/order",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8765",
 					"path": [
 						"orders",
 						"order"
@@ -178,16 +271,11 @@
 			"name": "Order product with wrong package",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "oauth2",
+					"oauth2": [
 						{
-							"key": "password",
-							"value": "password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "user",
+							"key": "addTokenTo",
+							"value": "header",
 							"type": "string"
 						}
 					]

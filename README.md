@@ -30,3 +30,8 @@ docker compose up -d
 ## What hasn't been done
 - Saving orders to the database and changing their status after processing
 - Keylock is not connected to Spring security applications
+
+
+```
+psql -d demo -U postgres
+```
