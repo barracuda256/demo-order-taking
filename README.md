@@ -27,10 +27,12 @@ docker compose up -d
 |-|-|-|-
 | Keycloak | 8080 | `admin` | `keycloak`
 
+### 
+Keycloak is used for authorization
+The client 'backend-service' has been created with the grant type 'Client Credentials'
+
 ## What hasn't been done
 - Saving orders to the database and changing their status after processing
-- Keylock is not connected to Spring security applications
-
 
 ```
 psql -d demo -U postgres
