@@ -1,47 +1,89 @@
 {
-    "realm": "demo",
-    "enabled": true,
-    "users": [
+  "realm": "demo-realm",
+  "id": "demo-realm-id",
+  "enabled": true,
+  "users": [
+    {
+      "username": "keycloak",
+      "enabled": true,
+      "credentials": [
         {
-            "username": "keycloak",
-            "enabled": true,
-            "credentials": [
-                {
-                    "type": "password",
-                    "value": "test"
-                }
-            ],
-            "realmRoles": [
-                "user"
-            ]
+          "type": "password",
+          "value": "test"
         }
-    ],
-    "roles": {
-        "realm": [
-            {
-                "name": "user",
-                "description": "User privileges"
-            },
-            {
-                "name": "admin",
-                "description": "Administrator privileges"
-            }
-        ]
-    },
-    "defaultRoles": [
+      ],
+      "realmRoles": [
         "user"
-    ],
-    "clients": [
+      ]
+    },
+    {
+      "username": "backend-user",
+      "enabled": true,
+      "credentials": [
         {
-            "clientId": "app",
-            "enabled": true,
-            "publicClient": true,
-            "redirectUris": [
-                "*"
-            ],
-            "webOrigins": [
-                "*"
-            ]
+          "type": "password",
+          "value": "password",
+          "temporary": false
         }
+      ],
+      "realmRoles": [],
+      "clientRoles": {
+        "backend-service": ["backend-role"]
+      }
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "backend-role",
+        "description": "Role for 3rd party backend service"
+      },
+      {
+        "name": "user",
+        "description": "User privileges"
+      },
+      {
+        "name": "admin",
+        "description": "Administrator privileges"
+      }
     ]
+  },
+  "defaultRoles": [
+    "user"
+  ],
+  "clients": [
+    {
+      "clientId": "app",
+      "enabled": true,
+      "publicClient": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    },
+    {
+      "clientId": "backend-service",
+      "enabled": true,
+      "directAccessGrantsEnabled": true,
+      "publicClient": false,
+      "bearerOnly": false,
+      "secret": "backend-need-to-change-secret",
+      "redirectUris": [],
+      "webOrigins": [
+        "*"
+      ],
+      "protocolMappers": [
+        {
+          "name": "audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.defaultClientAudience": "backend-service"
+          }
+        }
+      ]
+    }
+  ]
 }
